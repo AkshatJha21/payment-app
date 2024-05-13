@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.MONGODB_URL);
+mongoose.connect("mongodb+srv://adminAkshat:Akshat2134@cluster0.hast5ds.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 console.log("MongoDB connected successfully");
 
 const userSchema = mongoose.Schema({
-    username: String,
+    email: String,
     password: String,
     firstName: String,
     lastName: String,
