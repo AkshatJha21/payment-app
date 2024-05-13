@@ -7,6 +7,12 @@ const signupUser = z.object({
     password: z.string().min(8),
 });
 
+const loginUser = z.object({
+    email: z.string().email(),
+    password: z.string().min(8)
+});
+
 module.exports = {
-    signupUser
+    signupUser,
+    loginUser
 };
