@@ -12,7 +12,14 @@ const loginUser = z.object({
     password: z.string().min(8)
 });
 
+const updateUser = z.object({
+    password: z.string().optional(),
+    firstName: z.string().optional(),
+    lastName: z.string().optional()
+});
+
 module.exports = {
     signupUser,
-    loginUser
+    loginUser,
+    updateUser
 };

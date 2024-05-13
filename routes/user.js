@@ -1,9 +1,10 @@
 const express = require("express");
-const { signupUser, loginUser } = require("../types");
+const { signupUser, loginUser, updateUser } = require("../types");
 const { User } = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
+const { authMiddleware } = require("../middleware");
 
 const userRouter = express.Router();
 
@@ -89,6 +90,33 @@ userRouter.post('/signin', async (req, res) => {
             });
         }
     }
+
+});
+
+userRouter.put('/', authMiddleware, async (req, res) => {
+    const updatePayload = req.body;
+    const parsedPayload = updateUser.safeParse(updatePayload);
+
+    if (!parsedPayload.success) {
+        return res.status(411).json({
+            message: "Failed to update"
+        });
+    }
+
+    if (updatePayload.password) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(updatePayload.password, salt);
+        updatePayload.password = hashedPassword;
+    }
+
+    await User.updateOne({
+        _id: req.userId
+    }, updatePayload);
+
+    res.status(200).json({
+        message: "Updated succesfully"
+    })
+
 
 });
 
