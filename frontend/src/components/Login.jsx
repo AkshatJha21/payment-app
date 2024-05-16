@@ -7,17 +7,17 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    axios.post('http://localhost:3000/api/v1/user/signin', {
-      email: email,
-      password: password
-    }).then((res) => {
-      console.log("Login successful");
+  const handleClick = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/v1/user/signin', {
+        email: email,
+        password: password
+      });
+      localStorage.setItem(response.data.token);
       navigate('/dashboard');
-    }).catch((err) => {
+    } catch (error) {
       console.error("Login failed: ", err);
-      alert("Login failed");
-    });
+    };
   };
   return (
     <div className='bg-opacity-60 bg-black h-[100vh] flex items-center justify-center'>

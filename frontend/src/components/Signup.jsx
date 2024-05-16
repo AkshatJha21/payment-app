@@ -9,19 +9,19 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    axios.post('http://localhost:3000/api/v1/user/signup', {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password
-    }).then((res) => {
-      console.log("Sign up successful");
+  const handleClick = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/v1/user/signup', {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password
+      });
+      localStorage.setItem("token", response.data.token);
       navigate('/dashboard');
-    }).catch((err) => {
-      console.error("Sign up failed: ", err);
-      alert("Sign Up failed");
-    });
+    } catch (error) {
+      console.error("Failed to signup: ", error);
+    };
   };
 
   return (
