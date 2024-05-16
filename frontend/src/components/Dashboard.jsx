@@ -1,8 +1,16 @@
 import React from 'react'
+import Navbar from './Navbar'
+import Balance from './Balance'
+import Users from './Users'
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div>
+      <Navbar />
+      <Balance />
+      <hr />
+      <Users />
+    </div>
   )
 }
 
