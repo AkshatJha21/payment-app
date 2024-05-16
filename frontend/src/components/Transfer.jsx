@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useSearchParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
 
 const Transfer = () => {
@@ -7,6 +7,23 @@ const Transfer = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const name = searchParams.get("name");
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/signin');
+          return;
+        }
+      } catch (error) {
+        console.error('Error checking authentication:', error);
+      }
+    };
+  
+    checkAuth();
+  }, []);
 
   return (
     <div className='bg-opacity-60 bg-black h-[100vh] flex items-center justify-center'>

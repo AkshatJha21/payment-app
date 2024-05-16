@@ -8,6 +8,30 @@ const { authMiddleware } = require("../middleware");
 
 const userRouter = express.Router();
 
+userRouter.get('/me', authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.userId);
+
+        if (!user) {
+            return res.status(401).json({
+                message: 'User not found'
+            });
+        }
+
+        res.status(200).json({
+            user: {
+                _id: user._id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching user details:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 userRouter.post('/signup', async (req, res) => {
     const newUserPayload = req.body;
     const parsedPayload = signupUser.safeParse(newUserPayload);
