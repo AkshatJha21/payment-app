@@ -17,7 +17,6 @@ function App() {
           <Route path='/send' element={<Transfer />}/>
         </Routes>
       </BrowserRouter>
-      asdf
     </>
   )
 }
