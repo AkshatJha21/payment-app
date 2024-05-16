@@ -13,10 +13,10 @@ const Login = () => {
         email: email,
         password: password
       });
-      localStorage.setItem(response.data.token);
+      localStorage.setItem("token", response.data.token);
       navigate('/dashboard');
     } catch (error) {
-      console.error("Login failed: ", err);
+      console.error("Login failed: ", error);
     };
   };
   return (
