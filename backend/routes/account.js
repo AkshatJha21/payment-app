@@ -6,12 +6,22 @@ const { Account } = require("../db");
 const accountRouter = express.Router();
 
 accountRouter.get('/balance', authMiddleware, async (req, res) => {
-    const account = await Account.findOne({
+    const acc = await Account.findOne({
         userId: req.userId
     });
 
+    if (!acc) {
+        return res.status(401).json({
+            message: 'Account not found'
+        });
+    }
+
     res.status(200).json({
-        balance: account.balance
+        account: {
+            _id: acc._id,
+            userId: acc.userId,
+            balance: acc.balance
+        }
     });
 });
 

@@ -27,7 +27,7 @@ const Users = () => {
         <div className='flex flex-col p-2 '>
           {users.map((user) => {
             return (
-              <div className='flex my-2'>
+              <div className='flex my-2' key={user._id}>
                 <div className='flex items-center gap-x-2 flex-1'>
                     <p className='p-2 bg-blue-300 rounded-full h-10 w-10 text-center'>A</p>
                     <p className='font-semibold'>{user.firstName} {user.lastName}</p>
