@@ -20,6 +20,7 @@ const Signup = () => {
       navigate('/dashboard');
     }).catch((err) => {
       console.error("Sign up failed: ", err);
+      alert("Sign Up failed");
     });
   };
 
