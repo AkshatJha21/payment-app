@@ -1,18 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import useDebounce from '../hooks/useDebounce';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState("");
+  const [currentUserId, setCurrentUserId] = useState(null);  
   const navigate = useNavigate();
+  const debouncedFilter = useDebounce(filter, 3000);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
+      try {
+        const token = localStorage.getItem('token');
+        axios.get("http://localhost:3000/api/v1/user/me" , {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).then(response => {
+          setCurrentUserId(response.data.user._id);
+        })
+      } catch (error) {
+        console.error("Error fetching current user: ", error);
+      }
+  }, []);
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + debouncedFilter)
       .then(response => {
         setUsers(response.data.user);
       })
-  }, [filter]);
+  }, [debouncedFilter]);
   return (
     <div className='flex flex-col mx-4 p-4'>
         <h1 className='text-lg font-semibold mb-2'>Users</h1>
@@ -25,7 +43,7 @@ const Users = () => {
             }} 
         />        
         <div className='flex flex-col p-2 '>
-          {users.map((user) => {
+          {users.filter(user => user._id !== currentUserId).map((user) => {
             return (
               <div className='flex my-2' key={user._id}>
                 <div className='flex items-center gap-x-2 flex-1'>
