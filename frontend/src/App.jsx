@@ -5,6 +5,7 @@ import Signup from './components/Signup'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Transfer from './components/Transfer';
 import { useEffect, useState } from 'react';
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -19,6 +20,7 @@ function App() {
   }, []);
   return (
     <>
+      <Toaster position='top-center'/>
       <BrowserRouter>
         <Routes>
           <Route path='/signup' element={<Signup />}/>
