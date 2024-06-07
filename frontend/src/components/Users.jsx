@@ -47,7 +47,7 @@ const Users = () => {
             return (
               <div className='flex my-2' key={user._id}>
                 <div className='flex items-center gap-x-2 flex-1'>
-                    <p className='p-2 bg-blue-300 rounded-full h-10 w-10 text-center'>A</p>
+                    <p className='p-2 bg-blue-300 rounded-full h-10 w-10 text-center'>{user.firstName[0]}</p>
                     <p className='font-semibold'>{user.firstName} {user.lastName}</p>
                 </div>
                 <button 
