@@ -8,7 +8,7 @@ const Users = () => {
   const [filter, setFilter] = useState("");
   const [currentUserId, setCurrentUserId] = useState(null);  
   const navigate = useNavigate();
-  const debouncedFilter = useDebounce(filter, 3000);
+  const debouncedFilter = useDebounce(filter, 600);
 
   useEffect(() => {
       try {
